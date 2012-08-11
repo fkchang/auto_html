@@ -1,15 +1,16 @@
-require 'redcarpet'
+require 'kramdown'
 
-class NoParagraphRenderer < ::Redcarpet::Render::XHTML
-  def paragraph(text)
-    text
-  end    
-end
+# class NoParagraphRenderer < ::Redcarpet::Render::XHTML
+#   def paragraph(text)
+#     text
+#   end    
+# end
 
 AutoHtml.add_filter(:image).with({:alt => ''}) do |text, options|
-  r = Redcarpet::Markdown.new(NoParagraphRenderer)
+  # r = Redcarpet::Markdown.new(NoParagraphRenderer)
   alt = options[:alt]
   text.gsub(/https?:\/\/.+?\.(jpg|jpeg|bmp|gif|png)(\?\S+)?/i) do |match|
-    r.render("![#{alt}](#{match})")
+    Kramdown::Document.new("![#{alt}](#{match})").to_html
+    # r.render("![#{alt}](#{match})")
   end
 end

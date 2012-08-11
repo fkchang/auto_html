@@ -17,9 +17,9 @@ class RedcarpetTest < Test::Unit::TestCase
     assert_equal '<p><a href="http://example.org/">This is a link</a></p>'+"\n", result
   end
 
-  class LinksInNewWindow < ::Redcarpet::Render::HTML
+  class LinksInNewWindow #< ::Redcarpet::Render::HTML
     def link(link, title, content)
-       "<a href=\"#{link}\" target=\"_blank\">#{content}</a>"
+      Kramdown::Document.new("<a href=\"#{link}\" target=\"_blank\">#{content}</a>").to_html
     end    
   end
   
